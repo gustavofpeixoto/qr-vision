@@ -3,9 +3,9 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
 using QrVision.Domain.Entities;
-using QrVision.Domain.Interfaces;
 using QrVision.Infra.Settings;
 using MongoDB.Driver;
+using QrVision.Domain.Interfaces.Repositories;
 
 namespace QrVision.Infra.Repositories
 {

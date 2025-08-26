@@ -13,4 +13,9 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QrVision.Domain\QrVision.Domain.csproj" />
+    <ProjectReference Include="..\QrVision.Infra\QrVision.Infra.csproj" />
+  </ItemGroup>
 </Project>
