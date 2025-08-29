@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QrVision.Domain.Interfaces.Messaging;
 using QrVision.Domain.Interfaces.Repositories;
+using QrVision.Infra.Messaging;
 using QrVision.Infra.Repositories;
 using QrVision.Infra.Settings;
 
@@ -22,6 +24,9 @@ namespace QrVision.Infra
 
                 return new VideoAnalysisRepository(mongoDbSettings);
             });
+
+            services.AddSingleton<RabbitMqConnectionManager>();
+            services.AddSingleton<IMessagingProducer, RabbitMqMessagingProducer>();
 
             return services;
         }
