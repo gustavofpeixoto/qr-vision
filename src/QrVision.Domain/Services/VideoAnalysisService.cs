@@ -11,7 +11,7 @@ namespace QrVision.Domain.Services
     {
         public async Task<List<QrCodeResult>> ExtractAndDecodeQrCodeAsync(string videoPath, CancellationToken token)
         {
-            var results = new ConcurrentBag<QrCodeResult>();
+            var results = new ConcurrentDictionary<string, QrCodeResult>();
             var mediaInfo = await FFProbe.AnalyseAsync(videoPath);
             var duration = mediaInfo.Duration; var frameRate = 1;
             var totalFrames = (int)Math.Floor(duration.TotalSeconds * frameRate);
@@ -35,10 +35,10 @@ namespace QrVision.Domain.Services
 
                         if (qrResult != null)
                         {
-                            results.Add(new QrCodeResult
-                            {
-                                Content = qrResult.Text,
-                                TimestampInSeconds = timestamp.TotalSeconds
+                            results.TryAdd(qrResult.Text, new QrCodeResult
+                            { 
+                                Content = qrResult.Text, 
+                                TimestampInSeconds = timestamp.TotalSeconds 
                             });
                         }
                     }
@@ -61,7 +61,7 @@ namespace QrVision.Domain.Services
 
             if (File.Exists(videoPath)) File.Delete(videoPath);
 
-            return [.. results.OrderBy(r => r.TimestampInSeconds)];
+            return [.. results.Values.OrderBy(r => r.TimestampInSeconds)];
         }
     }
 }
