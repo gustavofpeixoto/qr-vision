@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Ignorar all files into FFmpeg folder
+/src/QrVision.Api/FFmpeg/
