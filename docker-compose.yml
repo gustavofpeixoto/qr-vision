@@ -1,0 +1,17 @@
+services:
+  qr-vision-api:
+    image: qr-vision:latest
+    container_name: qr-vision-api
+    environment:
+      - ASPNETCORE_HTTP_PORTS=6080
+    build:
+      context: .
+      dockerfile: src/QrVision.Api/Dockerfile
+    ports:
+      - "6080:6080"
+    networks:
+      - qrvision
+
+networks:
+  qrvision:
+    driver: bridge
