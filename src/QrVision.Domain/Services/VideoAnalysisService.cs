@@ -19,7 +19,10 @@ namespace QrVision.Domain.Services
             if (totalFrames <= 0) { return []; }
 
             await Parallel.ForEachAsync(
-                Enumerable.Range(0, totalFrames), new ParallelOptions { CancellationToken = token, MaxDegreeOfParallelism = Environment.ProcessorCount },
+                Enumerable.Range(0, totalFrames), new ParallelOptions 
+                { 
+                    CancellationToken = token, MaxDegreeOfParallelism = Environment.ProcessorCount 
+                },
                 async (i, ct) =>
                 {
                     var timestamp = TimeSpan.FromSeconds(i / (double)frameRate);
@@ -36,9 +39,9 @@ namespace QrVision.Domain.Services
                         if (qrResult != null)
                         {
                             results.TryAdd(qrResult.Text, new QrCodeResult
-                            { 
-                                Content = qrResult.Text, 
-                                TimestampInSeconds = timestamp.TotalSeconds 
+                            {
+                                Content = qrResult.Text,
+                                TimestampInSeconds = timestamp.TotalSeconds
                             });
                         }
                     }
@@ -52,10 +55,7 @@ namespace QrVision.Domain.Services
                     }
                     finally
                     {
-                        if (File.Exists(tempFramePath))
-                        {
-                            File.Delete(tempFramePath);
-                        }
+                        if (File.Exists(tempFramePath)) File.Delete(tempFramePath);
                     }
                 });
 
