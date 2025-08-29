@@ -11,7 +11,10 @@ namespace QrVision.Domain.Services
     {
         public async Task<List<QrCodeResult>> ExtractAndDecodeQrCodeAsync(string videoPath, CancellationToken token)
         {
-            var results = new ConcurrentBag<QrCodeResult>(); var mediaInfo = await FFProbe.AnalyseAsync(videoPath); var duration = mediaInfo.Duration; var frameRate = 1; var totalFrames = (int)Math.Floor(duration.TotalSeconds * frameRate);
+            var results = new ConcurrentBag<QrCodeResult>();
+            var mediaInfo = await FFProbe.AnalyseAsync(videoPath);
+            var duration = mediaInfo.Duration; var frameRate = 1;
+            var totalFrames = (int)Math.Floor(duration.TotalSeconds * frameRate);
 
             if (totalFrames <= 0) { return []; }
 
