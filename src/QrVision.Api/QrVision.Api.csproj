@@ -20,4 +20,10 @@
     <ProjectReference Include="..\QrVision.Infra\QrVision.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\sharedsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

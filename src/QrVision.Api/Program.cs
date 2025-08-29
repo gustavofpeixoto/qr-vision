@@ -1,20 +1,17 @@
-using FFMpegCore;
 using QrVision.Domain;
 using QrVision.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddJsonByFileName("sharedsettings");
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDomainServices();
 builder.Services.AddRepositories(builder.Configuration);
 
-// Configure o caminho para os binários do FFmpeg
-GlobalFFOptions.Configure(options => options.BinaryFolder = "./FFmpeg");
+QrVision.Domain.FfmpegSettings.AddFfmpegGlobalSettings();
 
 var app = builder.Build();
 
