@@ -7,7 +7,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace QrVision.Domain.Services
 {
-    public class VideoAnalysisService : IVideoAnalysisService
+    public class VideoQrCodeExtractionService : IVideoQrCodeExtractionService
     {
         public async Task<List<QrCodeResult>> ExtractAndDecodeQrCodeAsync(string videoPath, CancellationToken token)
         {

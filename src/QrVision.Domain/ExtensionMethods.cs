@@ -8,7 +8,7 @@ namespace QrVision.Domain
     {
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            services.AddScoped<IVideoAnalysisService, VideoAnalysisService>();
+            services.AddScoped<IVideoQrCodeExtractionService, VideoQrCodeExtractionService>();
 
             return services;
         }

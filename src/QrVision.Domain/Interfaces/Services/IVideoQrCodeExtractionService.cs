@@ -2,7 +2,7 @@
 
 namespace QrVision.Domain.Interfaces.Services
 {
-    public interface IVideoAnalysisService
+    public interface IVideoQrCodeExtractionService
     {
         Task<List<QrCodeResult>> ExtractAndDecodeQrCodeAsync(string videoPath, CancellationToken token);
     }
