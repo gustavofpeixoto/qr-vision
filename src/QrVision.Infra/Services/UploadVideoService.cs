@@ -14,7 +14,7 @@ namespace QrVision.Infra.Services
         public async Task ExecuteAsync(Stream fileStream, string originalFileName)
         {
             var fileName = await StoreVideoAsync(fileStream, originalFileName);
-            var videoAnalysis = new VideoAnalysis(VideoAnalysisStatus.Processing);
+            var videoAnalysis = new VideoAnalysis();
 
             await videoAnalysisRepository.AddAsync(videoAnalysis);
 
