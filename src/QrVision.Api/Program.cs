@@ -1,7 +1,12 @@
 using QrVision.Domain;
 using QrVision.Infra;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 builder.Configuration.AddJsonByFileName("sharedsettings");
 
@@ -11,10 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDomainServices();
 builder.Services.AddRepositories(builder.Configuration);
 
-QrVision.Domain.FfmpegSettings.AddFfmpegGlobalSettings();
-
 var app = builder.Build();
-
 
 app.UseSwagger();
 app.UseSwaggerUI();

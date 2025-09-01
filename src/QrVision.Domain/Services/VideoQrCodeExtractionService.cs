@@ -48,7 +48,7 @@ namespace QrVision.Domain.Services
                     }
                     catch (OperationCanceledException)
                     {
-                        // O Parallel.ForEachAsync foi cancelado, o que é esperado.
+                        Log.Warning("Processamento paralelo cancelado.");
                     }
                     catch (Exception ex)
                     {
