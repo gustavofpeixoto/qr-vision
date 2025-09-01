@@ -2,11 +2,10 @@
 
 namespace QrVision.Domain.Entities
 {
-    public class VideoAnalysis : Entity
+    public class VideoAnalysis(VideoAnalysisStatus status)
     {
-        public VideoAnalysisStatus Status { get; set; }
-        public string OriginalFileName { get; set; } = default!;
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public VideoAnalysisStatus Status { get; set; } = status;
         public List<QrCodeResult> QrCodeResults { get; set; } = default!;
-        public string ErrorMessage { get; set; } = default!;
     }
 }

@@ -2,8 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using QrVision.Domain.Interfaces.Messaging;
 using QrVision.Domain.Interfaces.Repositories;
+using QrVision.Domain.Interfaces.Services;
 using QrVision.Infra.Messaging;
 using QrVision.Infra.Repositories;
+using QrVision.Infra.Services;
 using QrVision.Infra.Settings;
 
 namespace QrVision.Infra
@@ -27,6 +29,7 @@ namespace QrVision.Infra
 
             services.AddSingleton<RabbitMqConnectionManager>();
             services.AddSingleton<IMessagingProducer, RabbitMqMessagingProducer>();
+            services.AddScoped<IProcessVideoService, ProcessVideoService>();
 
             return services;
         }

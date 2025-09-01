@@ -1,0 +1,9 @@
+{
+  "RABBITMQ_PORT": "5672",
+  "RABBITMQ_HOSTNAME": "qr-vision-rabbitmq",
+  "RABBITMQ_VIRTUALHOST": "/",
+  "RABBITMQ_USERNAME": "admin",
+  "RABBITMQ_PASSWORD": "L38IwqjTXku0mxvCtKvNqw",
+  "MONGODB_CONNECTION_STRING": "mongodb://admin:rHQaXMpbu02xTHkOpcyREw@qr-vision-mongo:27017",
+  "MONGODB_DATABASE_NAME": "qr-vision"
+}

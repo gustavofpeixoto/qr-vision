@@ -1,7 +1,6 @@
 services:
   qr-vision-api:
     image: qr-vision:latest
-    container_name: qr-vision-api
     environment:
       - ASPNETCORE_HTTP_PORTS=6080
     build:
@@ -11,6 +10,52 @@ services:
       - "6080:6080"
     networks:
       - qrvision
+    container_name: qr-vision-api
+
+  qr-vision-rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "L38IwqjTXku0mxvCtKvNqw"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - qrvision
+    container_name: qr-vision-rabbitmq
+
+  qr-vision-mongo:
+    image: mongo:latest
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: rHQaXMpbu02xTHkOpcyREw
+    volumes:
+      - C:/Users/Gustavo/source/volumes:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - qrvision
+    container_name: qr-vision-mongo
+
+  qr-vision-mongo-express:
+    image: mongo-express:latest
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: gustavofpeixoto
+      ME_CONFIG_BASICAUTH_PASSWORD: local
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: rHQaXMpbu02xTHkOpcyREw
+      ME_CONFIG_MONGODB_SERVER: qr-vision-mongo
+    ports:
+      - 8081:8081
+    networks:
+      - qrvision
+    container_name: qr-vision-mongo-express
+    depends_on:
+    - qr-vision-mongo
 
 networks:
   qrvision:
