@@ -45,7 +45,7 @@ namespace QrVision.Infra.Repositories
 
         public Task AddAsync(VideoAnalysis videoAnalysis) => _videoAnalysisCollection.InsertOneAsync(videoAnalysis);
 
-        public async Task GetByIdAsync(Guid id)
+        public async Task<VideoAnalysis> GetByIdAsync(Guid id)
             => await _videoAnalysisCollection.Find(va => va.Id == id).SingleOrDefaultAsync();
 
         public async Task UpdateAsync(VideoAnalysis videoAnalysis)
