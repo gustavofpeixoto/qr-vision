@@ -2,6 +2,7 @@
 using FFMpegCore;
 using QrVision.Domain.Entities;
 using QrVision.Domain.Interfaces.Services;
+using Serilog;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -51,7 +52,7 @@ namespace QrVision.Domain.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Erro ao processar frame no timestamp {timestamp}: {ex.Message}");
+                        Log.Error($"Erro ao processar frame no timestamp {timestamp}: {ex.Message}");
                     }
                     finally
                     {
