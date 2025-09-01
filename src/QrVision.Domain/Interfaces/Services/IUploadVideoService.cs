@@ -1,6 +1,6 @@
 ﻿namespace QrVision.Domain.Interfaces.Services
 {
-    public interface IProcessVideoService
+    public interface IUploadVideoService
     {
         public Task ExecuteAsync(Stream fileStream, string originalFileName);
     }

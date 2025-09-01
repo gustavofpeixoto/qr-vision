@@ -6,7 +6,7 @@ namespace QrVision.Api.Controllers
 {
     [ApiController]
     [Route("api/video")]
-    public class VideoController(IProcessVideoService processVideoService) : ControllerBase
+    public class VideoController(IUploadVideoService uploadVideoService) : ControllerBase
     {
         [HttpPost("/upload")]
         public async Task<IActionResult> UploadAsync(IFormFile videoFile)
@@ -15,7 +15,7 @@ namespace QrVision.Api.Controllers
                 return BadRequest(ErrorMessagesConst.FileNotFound);
 
             await using var stream = videoFile.OpenReadStream();
-            await processVideoService.ExecuteAsync(stream, videoFile.Name);
+            await uploadVideoService.ExecuteAsync(stream, videoFile.Name);
 
             return Accepted();
         }

@@ -8,8 +8,8 @@ using QrVision.Infra.Messaging.Messages;
 
 namespace QrVision.Infra.Services
 {
-    public class ProcessVideoService( IMessagingProducer messagingProducer,
-        IVideoAnalysisRepository videoAnalysisRepository) : IProcessVideoService
+    public class UploadVideoService( IMessagingProducer messagingProducer,
+        IVideoAnalysisRepository videoAnalysisRepository) : IUploadVideoService
     {
         public async Task ExecuteAsync(Stream fileStream, string originalFileName)
         {
