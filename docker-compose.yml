@@ -1,6 +1,6 @@
 services:
   qr-vision-api:
-    image: qr-vision:latest
+    image: qr-vision-api:latest
     environment:
       - ASPNETCORE_HTTP_PORTS=6080
     build:
@@ -11,6 +11,25 @@ services:
     networks:
       - qrvision
     container_name: qr-vision-api
+    volumes:
+      - videos:/app/videos
+
+  qr-vision-worker:
+    image: qr-vision-worker:latest
+    environment:
+      - ASPNETCORE_HTTP_PORTS=6081
+    build:
+      context: .
+      dockerfile: src/QrVision.Worker/Dockerfile
+    ports:
+      - "6081:6081"
+    networks:
+      - qrvision
+    container_name: qr-vision-worker
+    depends_on:
+    - qr-vision-rabbitmq
+    volumes:
+      - videos:/app/videos
 
   qr-vision-rabbitmq:
     image: rabbitmq:3-management
@@ -56,6 +75,9 @@ services:
     container_name: qr-vision-mongo-express
     depends_on:
     - qr-vision-mongo
+
+volumes:
+  videos:
 
 networks:
   qrvision:

@@ -10,10 +10,13 @@ namespace QrVision.Domain.Services
 {
     public class VideoQrCodeExtractionService : IVideoQrCodeExtractionService
     {
-        public async Task<List<QrCodeResult>> ExtractAndDecodeQrCodeAsync(string videoPath, CancellationToken token)
+        private const string _sharedVideoPath = "/app/videos";
+
+        public async Task<List<QrCodeResult>> ExtractAndDecodeQrCodeAsync(string videoFileName, CancellationToken token)
         {
+            var videoFilePath = Path.Combine(_sharedVideoPath, videoFileName);
             var results = new ConcurrentDictionary<string, QrCodeResult>();
-            var mediaInfo = await FFProbe.AnalyseAsync(videoPath);
+            var mediaInfo = await FFProbe.AnalyseAsync(videoFilePath);
             var duration = mediaInfo.Duration; var frameRate = 1;
             var totalFrames = (int)Math.Floor(duration.TotalSeconds * frameRate);
 
@@ -31,7 +34,7 @@ namespace QrVision.Domain.Services
 
                     try
                     {
-                        await FFMpeg.SnapshotAsync(videoPath, tempFramePath, new System.Drawing.Size(640, 480), timestamp);
+                        await FFMpeg.SnapshotAsync(videoFilePath, tempFramePath, new System.Drawing.Size(640, 480), timestamp);
                         using var image = await Image.LoadAsync<Rgba32>(tempFramePath, ct);
 
                         var reader = new ZXing.ImageSharp.BarcodeReader<Rgba32>();
@@ -60,7 +63,7 @@ namespace QrVision.Domain.Services
                     }
                 });
 
-            if (File.Exists(videoPath)) File.Delete(videoPath);
+            if (File.Exists(videoFilePath)) File.Delete(videoFilePath);
 
             return [.. results.Values.OrderBy(r => r.TimestampInSeconds)];
         }
