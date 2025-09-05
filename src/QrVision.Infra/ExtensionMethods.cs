@@ -30,6 +30,7 @@ namespace QrVision.Infra
             services.AddSingleton<RabbitMqConnectionManager>();
             services.AddSingleton<IMessagingProducer, RabbitMqMessagingProducer>();
             services.AddScoped<IUploadVideoService, UploadVideoService>();
+            services.AddScoped<IGetAnalysisResultService, GetAnalysisResultService>();
 
             return services;
         }

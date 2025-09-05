@@ -2,6 +2,6 @@
 {
     public interface IUploadVideoService
     {
-        public Task ExecuteAsync(Stream fileStream, string originalFileName);
+        public Task<Guid> ExecuteAsync(Stream fileStream, string originalFileName);
     }
 }

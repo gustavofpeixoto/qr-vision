@@ -12,7 +12,7 @@ namespace QrVision.Infra.Services
     {
         private const string _sharedVideoPath = "/app/videos";
 
-        public async Task ExecuteAsync(Stream fileStream, string originalFileName)
+        public async Task<Guid> ExecuteAsync(Stream fileStream, string originalFileName)
         {
             var fileName = await StoreVideoAsync(fileStream, originalFileName);
             var videoAnalysis = new VideoAnalysis();
@@ -21,6 +21,8 @@ namespace QrVision.Infra.Services
 
             var message = new ProcessVideoMessage(videoAnalysis.Id, fileName);
             await messagingProducer.SendAsync(message, QueueNameConst.ProcessVideo);
+
+            return videoAnalysis.Id;
         }
 
         private static async Task<string> StoreVideoAsync(Stream fileStream, string originalFileName)
