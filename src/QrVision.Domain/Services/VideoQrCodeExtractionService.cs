@@ -55,7 +55,7 @@ namespace QrVision.Domain.Services
                     }
                     catch (Exception ex)
                     {
-                        Log.Error($"Erro ao processar frame no timestamp {timestamp}: {ex.Message}");
+                        Log.Error("Erro ao processar frame no timestamp {timestamp}: {ex.Message}", timestamp, ex.Message);
                     }
                     finally
                     {
