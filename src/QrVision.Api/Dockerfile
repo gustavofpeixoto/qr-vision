@@ -2,7 +2,8 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+# Usando o usuário 'app' diretamente para maior robustez
+USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -24,6 +25,14 @@ RUN dotnet publish "./QrVision.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publi
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
+# Troca para o usuário root para criar o diretório do volume
+USER root
+# --- ALTERAÇÃO PRINCIPAL AQUI ---
+# Cria o diretório para o volume e define o usuário 'app' como proprietário
+RUN mkdir /app/videos && chown app:app /app/videos
+
+# Retorna para o usuário 'app' por segurança
+USER app
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "QrVision.Api.dll"]

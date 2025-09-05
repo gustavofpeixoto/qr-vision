@@ -2,7 +2,8 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
-USER $APP_UID
+# O usuário padrão é 'app'. Usar o nome diretamente é mais seguro.
+USER app
 WORKDIR /app
 
 # This stage is used to build the service project
@@ -22,10 +23,15 @@ RUN dotnet publish "./QrVision.Worker.csproj" -c $BUILD_CONFIGURATION -o /app/pu
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
-# Instalar ffmpeg/ffprobe no container que vai rodar
+# Troca para o usuário root temporariamente para instalar pacotes e criar a pasta
 USER root
-RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
-USER $APP_UID
+RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/* && \
+    # --- ALTERAÇÃO PRINCIPAL AQUI ---
+    # Cria o diretório para o volume e define o usuário 'app' como proprietário
+    mkdir /app/videos && chown app:app /app/videos
+
+# Retorna para o usuário 'app' por segurança antes de executar a aplicação
+USER app
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "QrVision.Worker.dll"]
