@@ -23,12 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain.Services\" />
-    <Folder Include="Infra.Services\" />
-    <Folder Include="Worker.Consumers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\QrVision.Api\QrVision.Api.csproj" />
     <ProjectReference Include="..\..\src\QrVision.Domain\QrVision.Domain.csproj" />
     <ProjectReference Include="..\..\src\QrVision.Infra\QrVision.Infra.csproj" />

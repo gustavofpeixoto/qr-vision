@@ -48,7 +48,6 @@ namespace QrVision.UnitTests.Api.Controllers
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             okResult.StatusCode.Should().Be(200);
 
-            // Extrai o valor do objeto anônimo para verificação
             var returnedValue = okResult.Value;
             var idProperty = returnedValue.GetType().GetProperty("Id");
             var returnedId = (Guid)idProperty.GetValue(returnedValue);
