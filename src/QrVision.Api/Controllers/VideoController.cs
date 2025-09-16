@@ -28,7 +28,7 @@ namespace QrVision.Api.Controllers
         {
             var videoAnalysisResultDto = await getAnalysisResultService.ExecuteAsync(id);
 
-            if (videoAnalysisResultDto.QrCodes.Count == 0)
+            if (videoAnalysisResultDto is null || videoAnalysisResultDto.AnalysisId == Guid.Empty)
                 return NotFound();
 
             return Ok(videoAnalysisResultDto);
