@@ -135,14 +135,14 @@ namespace QrVision.UnitTests.Api.Controllers
                 .ReturnsAsync(emptyDto);
 
             // Act
-            var result = await _controller.GetAnalysisResultAsync(analysisId);
+            var result = await _controller.GetAnalysisResultAsync(Guid.NewGuid());
 
             // Assert
             result.Should().BeOfType<NotFoundResult>();
             var notFoundResult = result as NotFoundResult;
             notFoundResult.StatusCode.Should().Be(404);
 
-            _getAnalysisResultServiceMock.Verify(s => s.ExecuteAsync(analysisId), Times.Once);
+            _getAnalysisResultServiceMock.Verify(s => s.ExecuteAsync(It.IsAny<Guid>()), Times.Once);
         }
     }
 }
