@@ -1,0 +1,44 @@
+name: Workflow build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore QrVision.sln
+
+      - name: Build all projects
+        run: dotnet build QrVision.sln --configuration Debug
+
+  unit_tests:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build unit tests projects
+        run: dotnet build QrVision.sln --configuration Debug
+
+      - name: Run unit tests
+        run: |
+          dotnet test tests\QrVision.UnitTests\QrVision.UnitTests.csproj --configuration Debug --no-build --verbosity normal
