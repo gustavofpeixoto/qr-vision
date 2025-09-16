@@ -11,7 +11,7 @@ namespace QrVision.Api.Controllers
         IGetAnalysisResultService getAnalysisResultService)
         : ControllerBase
     {
-        [HttpPost("/upload")]
+        [HttpPost("upload")]
         public async Task<IActionResult> UploadAsync(IFormFile videoFile)
         {
             if (videoFile == null || videoFile.Length == 0)
@@ -23,7 +23,7 @@ namespace QrVision.Api.Controllers
             return Ok(new { Id = videoAnalysisId });
         }
 
-        [HttpGet("/{id:guid}")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetAnalysisResultAsync(Guid id)
         {
             var videoAnalysisResultDto = await getAnalysisResultService.ExecuteAsync(id);
