@@ -20,7 +20,11 @@ namespace QrVision.Infra.Services
                 return new VideoAnalysisResultDto();
             }
 
-            var videoAnalysisResult = new VideoAnalysisResultDto { AnalysisId = videoAnalysis.Id };
+            var videoAnalysisResult = new VideoAnalysisResultDto 
+            { 
+                AnalysisId = videoAnalysis.Id,
+                Status = videoAnalysis.Status
+            };
 
             videoAnalysisResult.QrCodes.AddRange(videoAnalysis.QrCodeResults.Select(qrCode => (QrCodeResultDto)qrCode));
 
